@@ -65,7 +65,7 @@ def create(project_name, ingestion_items, type, output_catalog, output_schema, o
             output_table=output_table
         )
 
-        file_path = os.path.join(base_path, f"{item}_config.yaml")
+        file_path = os.path.join(base_path, f"wf-{item}-flare.yaml")
         with open(file_path, 'w') as file:
             file.write(file_content)
             logging.info(f"Created file: {file_path}")
