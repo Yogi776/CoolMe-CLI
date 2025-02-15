@@ -1,0 +1,27 @@
+---
+name: {name}
+version: v1
+type: policy
+layer: user
+policy:
+  data:
+    type: {type}
+    priority: {priority}
+
+    selector:
+      user:
+        match: any
+        tags:
+          - {roles}
+      column:
+        tags:
+          - {tags}
+    mask:
+        operator: bucket_number
+        bucket_number:
+            buckets :
+               - 100
+               - 200
+               - 300
+               - 400
+               - 500
