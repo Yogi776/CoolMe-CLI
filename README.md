@@ -52,6 +52,10 @@ coolme create jeweler360 customer product inventory --type postgres-icebase --ou
 
 This command will create YAML files for `customer`, `product`, and `inventory` in the `jeweler360/customer/build/data-processing` directory based on the `postgres-icebase` template with specified output settings.
 
+### Sample Single File Creation
+```bash
+coolme create jeweler360 customer --type postgres-icebase --output-catalog icebase --output-schema sandbox --output-tables "customer=customer_table"
+```
 ## Contributing
 
 Contributions to CoolMe are welcome! Please ensure you follow the contributing guidelines in the CONTRIBUTING.md file.

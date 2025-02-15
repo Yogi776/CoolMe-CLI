@@ -11,3 +11,11 @@ run:
 	--output-catalog icebase \
 	--output-schema sandbox \
 	--output-tables "customer=customer_table,product=product_table,inventory=inventory_table,order=order_table"
+
+
+tables:
+	coolme create jeweler360 customer \
+	--type postgres-icebase \
+	--output-catalog icebase \
+	--output-schema sandbox \
+	--output-tables "customer=customer_table"
