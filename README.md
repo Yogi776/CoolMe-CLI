@@ -15,8 +15,8 @@ To install CoolMe, follow these steps:
 
 1. Clone the repository or download the source code:
    ```bash
-   git clone https://yourrepositorylink.com/path/to/coolme.git
-   cd coolme
+   git clone git@github.com:Yogi776/CoolMe-CLI.git
+   cd CoolMe-CLI
    ```
 
 2. Install the package using pip:
