@@ -1,8 +1,4 @@
-To effectively document the Makefile commands in your README for the CoolMe CLI tool, you can add a section that clearly explains how to use these commands to execute complex configurations effortlessly. Below, I'll provide an updated segment of the README with the new Makefile commands section added:
 
-### Full README with Makefile Commands Section
-
-```markdown
 # CoolMe CLI Tool
 
 CoolMe is a command-line interface tool designed to automate the generation of workflow and policy YAML files for data ingestion processes. It supports custom configurations for different ingestion types and allows users to specify input and output settings for data processing tasks.
@@ -30,6 +26,15 @@ If you prefer to use Conda, you can create and activate a Conda environment spec
    conda activate coolme
    ```
 
+### Using Pip and Virtual Environments
+
+To install CoolMe using pip in a virtual environment:
+
+1. Clone the repository or download the source code:
+   ```bash
+   git clone git@github.com:Yogi776/CoolMe-CLI.git
+   cd CoolMe-CLI
+   ```
 ### Using Pip and Virtual Environments
 
 To install CoolMe using pip in a virtual environment:
