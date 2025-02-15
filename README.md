@@ -1,8 +1,3 @@
-Creating a README file for your Python CLI application is an essential part of making your tool user-friendly and accessible. The README should provide clear instructions on how to install, configure, and use the tool, including any prerequisites, installation steps, and usage examples. Below is a template for a README that suits the CLI tool `CoolMe`, which you can adjust based on your specific project's needs and environment.
-
-### README Template for the CoolMe CLI Tool
-
----
 
 # CoolMe CLI Tool
 
