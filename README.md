@@ -1,4 +1,8 @@
+To effectively document the Makefile commands in your README for the CoolMe CLI tool, you can add a section that clearly explains how to use these commands to execute complex configurations effortlessly. Below, I'll provide an updated segment of the README with the new Makefile commands section added:
 
+### Full README with Makefile Commands Section
+
+```markdown
 # CoolMe CLI Tool
 
 CoolMe is a command-line interface tool designed to automate the generation of workflow and policy YAML files for data ingestion processes. It supports custom configurations for different ingestion types and allows users to specify input and output settings for data processing tasks.
@@ -51,39 +55,56 @@ This will install all required dependencies and allow you to run the `coolme` co
 
 ## Usage
 
-To use CoolMe, you need to run commands in the following format:
+### Running Commands with Makefile
+
+For ease of use and to streamline workflow execution, the following Make commands are available:
+
+- **postgres-icebase-all**: Configure multiple items for Postgres-Icebase environment.
+  ```bash
+  make postgres-icebase-all
+  ```
+
+- **postgres-icebase**: Configure a single customer item for Postgres-Icebase.
+  ```bash
+  make postgres-icebase
+  ```
+
+- **azure-postgres**: Configure a single product item for Azure PostgreSQL.
+  ```bash
+  make azure-postgres
+  ```
+
+- **azure-postgres-all**: Configure multiple items for Azure PostgreSQL environment.
+  ```bash
+  make azure-postgres-all
+  ```
+
+These commands abstract complex CLI commands into simple Make commands that execute predefined configurations.
+
+### Custom Command Execution
+
+To use CoolMe for custom configurations, run commands in the following format:
 ```bash
 coolme create [Type] [project_name] [ingestion_items...] --type [ingestion_type] --output-catalog [catalog_name] --output-schema [schema_name] --output-tables "[item1=table1,item2=table2,...]"
 ```
 
-### Command Arguments and Options
+#### Examples
 
-- `Type`: The command to create workflow files.
-- `project_name`: The name of your project.
-- `ingestion_items`: A space-separated list of items that you want to configure for ingestion.
-- `--type`: Specifies the type of ingestion process (default: "default"). Examples include "default" and "postgres-icebase".
-- `--output-catalog`: The name of the output catalog.
-- `--output-schema`: The name of the output schema.
-- `--output-tables`: A comma-separated mapping of ingestion items to their respective output tables. Format: "item1=table1,item2=table2".
+- **Multiple Item Configuration**:
+  ```bash
+  coolme create postgres-icebase  customer jeweler360 customer product inventory --output-catalog icebase --output-schema sandbox --output-tables "customer=customer_table,product=product_table,inventory=inventory_table"
+  ```
 
-### Examples
-
-#### Multiple Item Configuration
-Here is an example command that uses the CoolMe tool to create configurations for the `jeweler360` project with multiple ingestion items:
-```bash
-coolme create workflow jeweler360 customer product inventory --type postgres-icebase --output-catalog icebase --output-schema sandbox --output-tables "customer=customer_table,product=product_table,inventory=inventory_table"
-```
-This command will create YAML files for `customer`, `product`, and `inventory` in the specified directory based on the `postgres-icebase` template with specified output settings.
-
-#### Single Item Configuration
-For simpler use cases or testing single data ingestion configurations, you can execute a command for just one item. For example:
-```bash
-coolme create workflow jeweler360 customer --type postgres-icebase --output-catalog icebase --output-schema sandbox --output-tables "customer=customer_table"
-```
-This command specifically creates a configuration for only the `customer` item, making it ideal for focused tasks or initial testing phases.
+- **Single Item Configuration**:
+  ```bash
+  coolme create postgres-icebase  customer jeweler360 customer --type postgres-icebase  --output-schema sandbox --output-tables "customer=customer_table"
+  ```
 
 ## Contributing
 
 Contributions to CoolMe are welcome! Please ensure you follow the contributing guidelines in the CONTRIBUTING.md file.
+```
 
-vide all necessary information for both beginning users and developers, ensuring that anyone can get started quickly and understand how to use the tool effectively.
+### Benefits of Including Makefile Commands in the README
+
+Including the Makefile commands in the README helps users understand how they can leverage the Make utility to run predefined configurations with minimal effort. This section serves as a quick reference guide, especially useful for new users or those unfamiliar with the more detailed CLI commands. It enhances usability and ensures that the tool can be effectively integrated into development workflows.
