@@ -6,7 +6,7 @@ install:
 
 # Run the coolme create command with predefined parameters
 run:
-	coolme create jeweler360 customer product inventory order \
+	coolme create workflow jeweler360 customer product inventory order \
 	--type postgres-icebase \
 	--output-catalog icebase \
 	--output-schema sandbox \
@@ -14,7 +14,7 @@ run:
 
 
 tables:
-	coolme create jeweler360 customer \
+	coolme create workflow jeweler360 customer \
 	--type postgres-icebase \
 	--output-catalog icebase \
 	--output-schema sandbox \

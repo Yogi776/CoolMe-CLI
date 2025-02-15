@@ -58,6 +58,7 @@ coolme create [project_name] [ingestion_items...] --type [ingestion_type] --outp
 
 ### Command Arguments and Options
 
+- `workflow`: The command to create workflow files.
 - `project_name`: The name of your project.
 - `ingestion_items`: A space-separated list of items that you want to configure for ingestion.
 - `--type`: Specifies the type of ingestion process (default: "default"). Examples include "default" and "postgres-icebase".
@@ -70,14 +71,14 @@ coolme create [project_name] [ingestion_items...] --type [ingestion_type] --outp
 #### Multiple Item Configuration
 Here is an example command that uses the CoolMe tool to create configurations for the `jeweler360` project with multiple ingestion items:
 ```bash
-coolme create jeweler360 customer product inventory --type postgres-icebase --output-catalog icebase --output-schema sandbox --output-tables "customer=customer_table,product=product_table,inventory=inventory_table"
+coolme create workflow jeweler360 customer product inventory --type postgres-icebase --output-catalog icebase --output-schema sandbox --output-tables "customer=customer_table,product=product_table,inventory=inventory_table"
 ```
 This command will create YAML files for `customer`, `product`, and `inventory` in the specified directory based on the `postgres-icebase` template with specified output settings.
 
 #### Single Item Configuration
 For simpler use cases or testing single data ingestion configurations, you can execute a command for just one item. For example:
 ```bash
-coolme create jeweler360 customer --type postgres-icebase --output-catalog icebase --output-schema sandbox --output-tables "customer=customer_table"
+coolme create workflow jeweler360 customer --type postgres-icebase --output-catalog icebase --output-schema sandbox --output-tables "customer=customer_table"
 ```
 This command specifically creates a configuration for only the `customer` item, making it ideal for focused tasks or initial testing phases.
 
@@ -85,15 +86,4 @@ This command specifically creates a configuration for only the `customer` item, 
 
 Contributions to CoolMe are welcome! Please ensure you follow the contributing guidelines in the CONTRIBUTING.md file.
 
-## License
-
-CoolMe is released under the MIT License. See the LICENSE file for more details.
-
----
-
-### Additional Notes
-
-- **Support and Contact Information**: Include contact info or links to issue trackers if users need support or want to report bugs.
-- **Detailed Documentation**: Consider linking to more detailed documentation if your tool is complex or has many features.
-
-This README is structured to provide all necessary information for both beginning users and developers, ensuring that anyone can get started quickly and understand how to use the tool effectively.
+vide all necessary information for both beginning users and developers, ensuring that anyone can get started quickly and understand how to use the tool effectively.
