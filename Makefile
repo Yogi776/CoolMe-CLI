@@ -31,3 +31,11 @@ azure-postgres-all:
 	--output-catalog icebase \
 	--output-schema sandbox \
 	--output-tables "customer=customer_table,product=product_table,inventory=inventory_table,order=order_table"
+
+
+test:
+	coolme create azure-postgres --project_name jeweler360 --data-product customer \
+		--entity "product,service,order" \
+		--output-catalog icebase \
+		--output-schema sandbox \
+		--output-tables "product=product_data,service=service_data,order=order_data"
