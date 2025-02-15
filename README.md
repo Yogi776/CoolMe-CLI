@@ -104,12 +104,8 @@ coolme create [Type] [project_name] [ingestion_items...] --type [ingestion_type]
   ```bash
   coolme create postgres-icebase  customer jeweler360 customer --type postgres-icebase  --output-schema sandbox --output-tables "customer=customer_table"
   ```
-
 ## Contributing
 
 Contributions to CoolMe are welcome! Please ensure you follow the contributing guidelines in the CONTRIBUTING.md file.
-```
 
-### Benefits of Including Makefile Commands in the README
-
-Including the Makefile commands in the README helps users understand how they can leverage the Make utility to run predefined configurations with minimal effort. This section serves as a quick reference guide, especially useful for new users or those unfamiliar with the more detailed CLI commands. It enhances usability and ensures that the tool can be effectively integrated into development workflows.
+vide all necessary information for both beginning users and developers, ensuring that anyone can get started quickly and understand how to use the tool effectively.
