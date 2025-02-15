@@ -1,0 +1,73 @@
+version: v1
+name: wf-{profile}-dataset
+type: workflow
+tags:
+  - Tier.Gold
+description: This workflow is responsible for ingesting {ingestion_title} for analysis from postgres into Lakehouse.
+workflow:
+  title: {ingestion_title} Dataset
+  dag:
+    - name: {profile}-dataset
+      description: This workflow is responsible for ingesting {ingestion_title} for analysis from postgres into Lakehouse.
+      title: {ingestion_title} Dataset
+      spec:
+        tags:
+          - Tier.Gold
+        stack: flare:6.0
+        compute: runnable-default
+        stackSpec:
+          driver:
+            coreLimit: 1200m
+            cores: 1
+            memory: 1024m
+          executor:
+            coreLimit: 1200m
+            cores: 1
+            instances: 1
+            memory: 1024m
+          job:
+            explain: true
+            inputs:
+              - name: {output_table}_input
+                dataset: dataos://thirdparty01:{output_schema}/{output_table}.json?acl=rw
+                format: json
+                options:
+                  multiLine: true
+
+              - name: {output_table}_input
+                dataset: dataos://thirdparty01:{output_schema}/{output_table}.json?acl=rw
+                format: csv
+                options:
+                  header: true
+                  inferSchema: true
+
+            logLevel: INFO
+            outputs:
+              - name: {output_table}_final_dataset
+                dataset: dataos://{output_catalog}:{output_schema}/{output_table}?acl=rw
+                driver: org.postgresql.Driver
+                format: jdbc
+                description: The {ingestion_title} table is a structured dataset that contains comprehensive information about various {ingestion_title} within the organization. It serves as a central repository for {ingestion_title} data, facilitating efficient management, analysis, and decision-making processes related to {ingestion_title} operations, logistics, and customer engagement.
+                tags:
+                   - Tier.Gold
+                options:
+                  saveMode: overwrite
+                title: {ingestion_title} Source Dataset
+            steps:
+              - sequence:
+                  - name: {output_table}_final_dataset
+                    sql: |
+                      SELECT
+                        *
+                      FROM
+                        {output_table}_input
+                    functions:
+                      - name: cleanse_column_names
+                      - name: change_column_case
+                        case: lower
+                      - name: set_type
+                        columns:
+                          report_time: timestamp
+                      - name: drop
+                        columns:
+                          - item_data
