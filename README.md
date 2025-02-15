@@ -53,12 +53,12 @@ This will install all required dependencies and allow you to run the `coolme` co
 
 To use CoolMe, you need to run commands in the following format:
 ```bash
-coolme create [project_name] [ingestion_items...] --type [ingestion_type] --output-catalog [catalog_name] --output-schema [schema_name] --output-tables "[item1=table1,item2=table2,...]"
+coolme create [Type] [project_name] [ingestion_items...] --type [ingestion_type] --output-catalog [catalog_name] --output-schema [schema_name] --output-tables "[item1=table1,item2=table2,...]"
 ```
 
 ### Command Arguments and Options
 
-- `workflow`: The command to create workflow files.
+- `Type`: The command to create workflow files.
 - `project_name`: The name of your project.
 - `ingestion_items`: A space-separated list of items that you want to configure for ingestion.
 - `--type`: Specifies the type of ingestion process (default: "default"). Examples include "default" and "postgres-icebase".
