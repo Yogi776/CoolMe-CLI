@@ -197,6 +197,30 @@ def create_s3_depot(depot_name, bucket_name, relative_path, access_key_id, acces
         logging.info(f"Created depot configuration at {config_path}")
 
 
+@click.command(name="create-bigquery-depot")
+@click.option('-depot_name', 'depot_name', prompt=True, help="Name of the depot")
+@click.option('-project_id', 'project_id', prompt=True, help="Project ID of Bigquery")
+@click.option('-json_keyfile', 'key_file', prompt=True, help="Path to JSON key file")
+def create_bigquery_depot(depot_name, project_id, json_keyfile):
+    """
+    Create a YAML configuration for a Bigquery depot.
+
+    Example usage:
+    """
+    generator = ConfigGenerator(TEMPLATES_DIR)
+    template_content = generator.load_template("depot/bigquery.yaml")
+    if template_content:
+        config = generator.create_config(
+            template_content,
+            depot_name=depot_name,
+            project_id=project_id,
+            json_keyfile=json_keyfile
+        )
+        config_path = os.path.join(os.getcwd(), f"config-{depot_name}-depot.yaml")
+        with open(config_path, 'w') as file:
+            file.write(config)
+        logging.info(f"Created depot configuration at {config_path}")
+
 # Setup commands for different environments
 setup_create_command('azure-postgres', 'postgres', 'public', 'flare/postgres/azure-postgres.yaml')
 setup_create_command('postgres-icebase', 'icebase', 'default', 'flare/postgres/postgres-icebase.yaml')
@@ -205,5 +229,6 @@ setup_create_command('bigquery-icebase', 'bigquery', 'default', 'flare/bigquery/
 cli.add_command(create_postgres_depot)
 cli.add_command(create_snowflake_depot)
 cli.add_command(create_s3_depot)
+cli.add_command(create_bigquery_depot)
 if __name__ == "__main__":
     cli()
