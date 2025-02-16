@@ -175,6 +175,10 @@ def create_snowflake_depot(depot_name, username, password, url, database,warehou
 def create_s3_depot(depot_name, bucket_name, relative_path, access_key_id, access_secret_key_id):
     """
     Create a YAML configuration for a S3 depot.
+
+    Example usage:
+
+        coolme create-s3-depot -depot_name poss3 -bucket_name tmdcsftptest -relative_path "/customer" -access_key_id <access_key_id> -access_secret_key_id <access_secret_key_id>
     """
     generator = ConfigGenerator(TEMPLATES_DIR)
     template_content = generator.load_template("depot/s3.yaml")
