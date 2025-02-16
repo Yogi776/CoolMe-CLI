@@ -135,12 +135,42 @@ def create_postgres_depot(depot_name, username, password, hostname, database):
             file.write(config)
         logging.info(f"Created depot configuration at {config_path}")
 
+
+@click.command(name="create-snowflake-depot")
+@click.option('-n', 'depot_name', prompt=True, help="Name of the depot")
+@click.option('-u', 'username', prompt=True, help="Username for the database")
+@click.option('-p', 'password', prompt=True, hide_input=True, help="Password for the database")
+@click.option('-h', 'url', prompt=True, help="Hostname of the database server")
+@click.option('-d', 'database', prompt=True, help="Database name")
+@click.option('-w', 'warehouse', prompt=True, help="Warehouse name")
+def create_snowflake_depot(depot_name, username, password, url, database,warehouse):
+    """
+    Create a YAML configuration for a PostgreSQL depot.
+    """
+    generator = ConfigGenerator(TEMPLATES_DIR)
+    template_content = generator.load_template("depot/snowflakes.yaml")
+    if template_content:
+        config = generator.create_config(
+            template_content,
+            depot_name=depot_name,
+            username=username,
+            password=password,
+            url=url,
+            database=database,
+            warehouse=warehouse
+        )
+        config_path = os.path.join(os.getcwd(), f"config-{depot_name}-depot.yaml")
+        with open(config_path, 'w') as file:
+            file.write(config)
+        logging.info(f"Created depot configuration at {config_path}")
+
 # Setup commands for different environments
 setup_create_command('azure-postgres', 'postgres', 'public', 'flare/postgres/azure-postgres.yaml')
 setup_create_command('postgres-icebase', 'icebase', 'default', 'flare/postgres/postgres-icebase.yaml')
 setup_create_command('azure-bigquery', 'bigquery', 'default', 'flare/bigquery/azure-bigquery.yaml')
 setup_create_command('bigquery-icebase', 'bigquery', 'default', 'flare/bigquery/bigquery-icebase.yaml')
 cli.add_command(create_postgres_depot)
+cli.add_command(create_snowflake_depot)
 
 if __name__ == "__main__":
     cli()

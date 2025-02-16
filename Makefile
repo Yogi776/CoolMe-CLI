@@ -53,3 +53,7 @@ test-dev:
 
 create-postgres-depot:
 	@coolme create-postgres-depot -n postgres -u postgres -p 12345 -h sandbox.postgres.database.azure.com -d postgres
+
+
+create-snowflake-depot:
+	@coolme create-snowflake-depot -n snowflake -u yash -p Pk.99@1234 -h WIIHBDA-PF56723.snowflakecomputing.com -d SNOWFLAKE_SAMPLE_DATA -w COMPUTE_WH
