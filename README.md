@@ -172,7 +172,7 @@ coolme create-postgres-depot -n postgres -u postgres -p 12345 -h sandbox.postgre
 
 ```
 
-This command will create a new PostgreSQL depot named `myDepot` with the specified access credentials and database details.
+This command will create a new PostgreSQL depot named `postgres` with the specified access credentials and database details.
 
 
 
