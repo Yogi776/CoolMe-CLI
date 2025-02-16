@@ -41,4 +41,11 @@ test:
 		--output-tables "product=product_data,service=service_data,order=order_data"
 
 
+test-dev:
+	coolme create postgres-icebase --project_name jeweler360 --data-product customer \
+		--entity "product,service,order" \
+		--output-catalog icebase \
+		--output-schema sandbox \
+		--output-tables "product=product_data,service=service_data,order=order_data"
+
 # 	coolme create azure-postgres --project_name jeweler360 --data-product customer 	--entity "product,service,order" 	--output-catalog icebase 	--output-schema sandbox	--output-tables "product=product_data,service=service_data,order=order_data"

@@ -39,25 +39,26 @@ def create_group():
     """Create resources like workflows and policies."""
     pass
 
+
 @create_group.command(name="postgres-icebase")
-@click.argument('project_name')
-@click.argument('name')
-@click.argument('ingestion_items', nargs=-1)
-@click.option('--type', default="default", help="Type of ingestion, e.g., 'default' or 'postgres-icebase'")
-@click.option('--output-catalog', default="default_catalog", help="Output catalog name")
-@click.option('--output-schema', default="default_schema", help="Output schema name")
-@click.option('--output-tables', type=lambda kv: {k:v for k, v in (x.split('=') for x in kv.split(','))}, required=True,
-              help="Mapping of ingestion items to output tables")
+@click.option('--project_name', default="default", help="Project name")
+@click.option('--data-product', default="default", help="Name of the data product")
+@click.option('--entity', help="Comma-separated list of entities or ingestion items to include")
+@click.option('--output-catalog', default="icebase", help="Output catalog name for Lakehouse")
+@click.option('--output-schema', default="default", help="Output schema name for Lakehouse")
+@click.option('--output-tables', type=lambda kv: {k: v for k, v in (x.split('=') for x in kv.split(','))}, required=True,
+              help="Mapping of entities to output tables for Lakehouse")
 @click.option('--template-path', default=os.path.join(TEMPLATES_DIR, "postgres-icebase.yaml"),
-              help="Path to the ingestion template file")
-def create_workflow(name,project_name, ingestion_items, type, output_catalog, output_schema, output_tables, template_path):
-    """Create ingestion files based on a customizable template."""
-    logging.info(f"Creating workflows for project: {project_name} with type: {type}")
-    base_path = os.path.join(os.getcwd(), project_name, f"{name}/build/data-processing")
+              help="Path to the Lakehouse ingestion template file")
+def azure_postgres(project_name, data_product, entity, output_catalog, output_schema, output_tables, template_path):
+    """Create ingestion files specifically configured for Azure PostgreSQL."""
+    logging.info(f"Creating Lakehouse workflows for project: {project_name}, Data Product: {data_product}")
+    base_path = os.path.join(os.getcwd(), project_name, f"{data_product}/build/data-processing")
     create_folder_if_not_exists(base_path)
 
-    for item in ingestion_items:
-        output_table = output_tables.get(item, None)
+    entities = entity.split(',') if entity else []
+    for item in entities:
+        output_table = output_tables.get(item.strip(), None)
         if not output_table:
             logging.error(f"No output table specified for {item}, skipping file creation.")
             continue
@@ -68,17 +69,18 @@ def create_workflow(name,project_name, ingestion_items, type, output_catalog, ou
             continue
 
         file_content = template_content.format(
-            profile=item,
+            profile=item.strip(),
             ingestion_title=item.replace("_", " ").title(),
             output_catalog=output_catalog,
             output_schema=output_schema,
             output_table=output_table
         )
 
-        file_path = os.path.join(base_path, f"wf-{item}-flare.yaml")
+        file_path = os.path.join(base_path, f"config-{item.strip()}-flare.yaml")
         with open(file_path, 'w') as file:
             file.write(file_content)
-            logging.info(f"Created file: {file_path}")
+            logging.info(f"Created Lakehouse workflow file for {item.strip()}: {file_path}")
+
 
 
 @create_group.command(name="azure-postgres")
