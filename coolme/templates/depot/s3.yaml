@@ -1,3 +1,32 @@
+---
+name: {depot_name}-r
+version: v1
+type: instance-secret
+description: "The purpose of secret to mount the snowflake"
+layer: user
+instance-secret:
+  type: key-value-properties
+  acl: r
+  data:
+   awssecretaccesskey: {access_secret_key_id}
+   secretkey: {access_secret_key_id}
+   accesskeyid: {access_key_id}
+   awsaccesskeyid: {access_key_id}
+---
+name: {depot_name}-rw
+version: v1
+type: instance-secret
+description: "The purpose of secret to mount the snowflake"
+layer: user
+instance-secret:
+  type: key-value-properties
+  acl: r
+  data:
+   awssecretaccesskey: {access_secret_key_id}
+   secretkey: {access_secret_key_id}
+   accesskeyid: {access_key_id}
+   awsaccesskeyid: {access_key_id}
+---
 version: v1
 name: {depot_name}
 type: depot
@@ -12,11 +41,13 @@ depot:
     bucket: {bucket_name}
     relativePath: "{relative_path}"
   external: true
-  connectionSecret:
-    - acl: rw
-      type: key-value-properties
-      data:
-        accesskeyid: {access_key_id}
-        awsaccesskeyid: {access_key_id}
-        awssecretaccesskey: {access_secret_key_id}
-        secretkey: {access_secret_key_id}
+  secrets:
+    - name: {depot_name}-r
+      keys:
+        - {depot_name}-r
+      allKeys: true
+
+    - name: {depot_name}-rw
+      keys:
+        - {depot_name}-rw
+      allKeys: true
