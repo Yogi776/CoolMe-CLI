@@ -1,0 +1,21 @@
+version: v1
+name: {depot_name}
+type: depot
+layer: user
+description: "The purpose of {depot_name} depot to consume data to create consumer Aligned Data Product"
+depot:
+  type: JDBC
+  description: "The purpose of {depot_name} depot to consume data to create consumer Aligned Data Product"
+  external: true
+  source: {depot_name}
+  connectionSecret:
+    - acl: rw
+      type: key-value-properties
+      data:
+        username: {username}
+        password: {password}
+  spec:
+    host: {hostname}
+    port: 5432
+    database: {database}
+    subprotocol: "postgresql"
