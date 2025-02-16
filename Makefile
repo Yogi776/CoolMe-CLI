@@ -57,3 +57,8 @@ create-postgres-depot:
 
 create-snowflake-depot:
 	@coolme create-snowflake-depot -n snowflake -u yash -p Pk.99@1234 -h WIIHBDA-PF56723.snowflakecomputing.com -d SNOWFLAKE_SAMPLE_DATA -w COMPUTE_WH
+
+
+
+create-s3-depot:
+	@coolme create-s3-depot -depot_name poss3 -bucket_name tmdcsftptest -relative_path "/customer" -access_key_id <access_key_id> -access_secret_key_id <access_secret_key_id>
