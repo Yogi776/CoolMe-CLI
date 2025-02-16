@@ -1,0 +1,22 @@
+version: v1
+name: {depot_name}
+type: depot
+tags:
+  - S3
+layer: user
+depot:
+  type: S3
+  description: "AWS S3 Bucket for POS Data"
+  compute: query-default
+  spec:
+    bucket: {bucket_name}
+    relativePath: "{relative_path}"
+  external: true
+  connectionSecret:
+    - acl: rw
+      type: key-value-properties
+      data:
+        accesskeyid: {access_key_id}
+        awsaccesskeyid: {access_key_id}
+        awssecretaccesskey: {access_secret_key_id}
+        secretkey: {access_secret_key_id}

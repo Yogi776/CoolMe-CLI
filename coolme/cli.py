@@ -145,7 +145,7 @@ def create_postgres_depot(depot_name, username, password, hostname, database):
 @click.option('-w', 'warehouse', prompt=True, help="Warehouse name")
 def create_snowflake_depot(depot_name, username, password, url, database,warehouse):
     """
-    Create a YAML configuration for a PostgreSQL depot.
+    Create a YAML configuration for a Snowflake depot.
     """
     generator = ConfigGenerator(TEMPLATES_DIR)
     template_content = generator.load_template("depot/snowflakes.yaml")
@@ -164,6 +164,35 @@ def create_snowflake_depot(depot_name, username, password, url, database,warehou
             file.write(config)
         logging.info(f"Created depot configuration at {config_path}")
 
+
+
+@click.command(name="create-s3-depot")
+@click.option('-depot_name', 'depot_name', prompt=True, help="Name of the depot")
+@click.option('-bucket_name', 'bucket_name', prompt=True, help="Bucket Name for the S3")
+@click.option('-relative_path', 'relative_path', prompt=True, hide_input=True, help="Relative path of the S3 Bucket")
+@click.option('-access_key_id', 'access_key_id', prompt=True, help="Access key for the S3 Bucket")
+@click.option('-access_secret_key_id', 'access_secret_key_id', prompt=True, help="Access secret key for the S3 Bucket")
+def create_s3_depot(depot_name, bucket_name, relative_path, access_key_id, access_secret_key_id):
+    """
+    Create a YAML configuration for a S3 depot.
+    """
+    generator = ConfigGenerator(TEMPLATES_DIR)
+    template_content = generator.load_template("depot/s3.yaml")
+    if template_content:
+        config = generator.create_config(
+            template_content,
+            depot_name=depot_name,
+            bucket_name=bucket_name,
+            relative_path=relative_path,
+            access_key_id=access_key_id,
+            access_secret_key_id=access_secret_key_id
+        )
+        config_path = os.path.join(os.getcwd(), f"config-{depot_name}-depot.yaml")
+        with open(config_path, 'w') as file:
+            file.write(config)
+        logging.info(f"Created depot configuration at {config_path}")
+
+
 # Setup commands for different environments
 setup_create_command('azure-postgres', 'postgres', 'public', 'flare/postgres/azure-postgres.yaml')
 setup_create_command('postgres-icebase', 'icebase', 'default', 'flare/postgres/postgres-icebase.yaml')
@@ -171,6 +200,6 @@ setup_create_command('azure-bigquery', 'bigquery', 'default', 'flare/bigquery/az
 setup_create_command('bigquery-icebase', 'bigquery', 'default', 'flare/bigquery/bigquery-icebase.yaml')
 cli.add_command(create_postgres_depot)
 cli.add_command(create_snowflake_depot)
-
+cli.add_command(create_s3_depot)
 if __name__ == "__main__":
     cli()
