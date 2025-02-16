@@ -64,11 +64,6 @@ This will install all required dependencies and allow you to run the `coolme` co
 
 For ease of use and to streamline workflow execution, the following Make commands are available:
 
-- **postgres-icebase-all**: Configure multiple items for Postgres-Icebase environment.
-  ```bash
-  make postgres-icebase-all
-  ```
-
 - **postgres-icebase**: Configure a single customer item for Postgres-Icebase.
   ```bash
   make postgres-icebase
@@ -78,15 +73,40 @@ For ease of use and to streamline workflow execution, the following Make command
   ```bash
   make azure-postgres
   ```
+  
+Here are the available Makefile commands for setting up different environments:
 
-- **azure-postgres-all**: Configure multiple items for Azure PostgreSQL environment.
-  ```bash
-  make azure-postgres-all
-  ```
+| Command           | Description                              | Usage Example                                               |
+|-------------------|------------------------------------------|-------------------------------------------------------------|
+| `azure-postgres`  | Configures items for Azure PostgreSQL.   | `make azure-postgres`                                       |
+| `postgres-icebase`| Configures items for Postgres-Icebase.   | `make postgres-icebase`                                     |
+| `azure-bigquery`  | Configures items for Azure BigQuery.     | `make azure-bigquery`                                       |
+| `bigquery-icebase`| Configures items for BigQuery-Icebase.   | `make bigquery-icebase`                                     |
 
-These commands abstract complex CLI commands into simple Make commands that execute predefined configurations.
+### Detailed Command Usage
 
-### Custom Command Execution
+Commands for custom configurations can be run with detailed parameters:
+
+```bash
+coolme create-<environment> \
+    --project_name <name> \
+    --data-product <product> \
+    --entity "<entities>" \
+    --output-catalog <catalog> \
+    --output-schema <schema> \
+    --output-tables "<table mappings>" \
+    --template-path "<path>"
+```
+
+#### Example Commands
+
+| Environment       | Command                                                                 |
+|-------------------|-------------------------------------------------------------------------|
+| Azure PostgreSQL  | `coolme create-azure-postgres --project_name jeweler360 --data-product customer --entity "product,service,order" --output-catalog icebase --output-schema sandbox --output-tables "product=product_data,service=service_data,order=order_data"` |
+| Postgres Icebase  | `coolme create-postgres-icebase --project_name jeweler360 --data-product customer --output-schema sandbox --output-tables "customer=customer_table"` |
+| Azure BigQuery    | `coolme create-azure-bigquery --project_name jeweler360 --data-product customer --entity "product,service,order" --output-catalog icebase --output-schema sandbox --output-tables "product=product_data,service=service_data,order=order_data"` |
+| BigQuery Icebase  | `coolme create-bigquery-icebase --project_name jeweler360 --data-product customer --output-schema sandbox --output-tables "customer=customer_table"` |
+
 
 To use CoolMe for custom configurations, run commands in the following format:
 ```bash
@@ -111,6 +131,51 @@ coolme create-azure-postgres \
   ```bash
   coolme create-postgres-icebase  --project_name jeweler360 --data-product customer  --output-schema sandbox --output-tables "customer=customer_table"
   ```
+
+---
+## Command: `create-postgres-depot`
+
+This command creates a configuration file for a PostgreSQL depot based on user-provided parameters.
+
+### Usage
+
+Run the command using Makefile:
+
+```bash
+make create-postgres-depot
+```
+
+Alternatively, execute the command directly (assuming `coolme` is set up correctly):
+
+```bash
+coolme create-postgres-depot -n your_depot_name -u your_username -p your_password -h your_hostname -d your_database
+```
+
+### Parameters
+
+The table below lists and describes each parameter used with the `create-postgres-depot` command:
+
+| Parameter | Flag | Description                                           | Required |
+|-----------|------|-------------------------------------------------------|:--------:|
+| Name      | `-n` | The name of the depot to be created.                  | Yes      |
+| Username  | `-u` | The username required for database access.            | Yes      |
+| Password  | `-p` | The password for database access.                     | Yes      |
+| Hostname  | `-h` | The hostname of the PostgreSQL server.                | Yes      |
+| Database  | `-d` | The name of the database to connect to.               | Yes      |
+
+### Example
+
+Here is an example command that illustrates how to use `create-postgres-depot` with all parameters filled in:
+
+```bash
+coolme create-postgres-depot -n postgres -u postgres -p 12345 -h sandbox.postgres.database.azure.com -d postgres
+
+```
+
+This command will create a new PostgreSQL depot named `myDepot` with the specified access credentials and database details.
+
+
+
 ## Contributing
 
 Contributions to CoolMe are welcome! Please ensure you follow the contributing guidelines in the CONTRIBUTING.md file.

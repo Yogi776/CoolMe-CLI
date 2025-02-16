@@ -42,7 +42,7 @@ test:
 
 
 test-dev:
-	coolme create-azure-postgres \
+	coolme create-azure-bigquery \
 		--project_name jeweler360 \
 		--data-product customer \
 		--entity "product,service,order" \
@@ -50,4 +50,6 @@ test-dev:
 		--output-schema sandbox \
 		--output-tables "product=product_data,service=service_data,order=order_data"
 
-# 	coolme create azure-postgres --project_name jeweler360 --data-product customer 	--entity "product,service,order" 	--output-catalog icebase 	--output-schema sandbox	--output-tables "product=product_data,service=service_data,order=order_data"
+
+create-postgres-depot:
+	@coolme create-postgres-depot -n postgres -u postgres -p 12345 -h sandbox.postgres.database.azure.com -d postgres

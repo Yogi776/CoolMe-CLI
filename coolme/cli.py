@@ -62,6 +62,27 @@ class IngestionManager:
                 file.write(file_content)
                 logging.info(f"Created configuration file for {item.strip()}: {file_path}")
 
+class ConfigGenerator:
+    """
+    Manages the creation of configuration files based on templates.
+    """
+    def __init__(self, template_dir):
+        self.template_dir = template_dir
+
+    def load_template(self, template_name):
+        """Load a YAML template from the specified path."""
+        template_path = os.path.join(self.template_dir, f"{template_name}")
+        try:
+            with open(template_path, "r") as file:
+                return file.read()
+        except FileNotFoundError:
+            logging.error(f"Template file not found: {template_path}")
+            return None
+
+    def create_config(self, template_content, **kwargs):
+        """Create a configuration file from a template and replace placeholders."""
+        return template_content.format(**kwargs)
+
 @click.group()
 def cli():
     """CoolMe CLI - A tool to automate workflow and policy YAML creation."""
@@ -72,8 +93,8 @@ def setup_create_command(env_name, default_catalog, default_schema, template_fil
     @click.option('--project_name', default="default", help="Project name")
     @click.option('--data-product', default="default", help="Name of the data product")
     @click.option('--entity', help="Comma-separated list of entities or ingestion items to include")
-    @click.option('--output-catalog', default=default_catalog, help=f"Output catalog name for {env_name}")
-    @click.option('--output-schema', default=default_schema, help=f"Output schema name for {env_name}")
+    @click.option('--output-catalog', default=default_catalog, help=f"Output catalog name for {default_catalog}")
+    @click.option('--output-schema', default=default_schema, help=f"Output schema name for {default_schema}")
     @click.option('--output-tables', type=lambda kv: {k: v for k, v in (x.split('=') for x in kv.split(','))}, required=True,
                   help="Mapping of entities to output tables")
     @click.option('--template-path', default=os.path.join(TEMPLATES_DIR, template_filename),
@@ -88,9 +109,38 @@ def setup_create_command(env_name, default_catalog, default_schema, template_fil
 
     return create_env_ingestion
 
+@click.command(name="create-postgres-depot")
+@click.option('-n', 'depot_name', prompt=True, help="Name of the depot")
+@click.option('-u', 'username', prompt=True, help="Username for the database")
+@click.option('-p', 'password', prompt=True, hide_input=True, help="Password for the database")
+@click.option('-h', 'hostname', prompt=True, help="Hostname of the database server")
+@click.option('-d', 'database', prompt=True, help="Database name")
+def create_postgres_depot(depot_name, username, password, hostname, database):
+    """
+    Create a YAML configuration for a PostgreSQL depot.
+    """
+    generator = ConfigGenerator(TEMPLATES_DIR)
+    template_content = generator.load_template("depot/postgres.yaml")
+    if template_content:
+        config = generator.create_config(
+            template_content,
+            depot_name=depot_name,
+            username=username,
+            password=password,
+            hostname=hostname,
+            database=database
+        )
+        config_path = os.path.join(os.getcwd(), f"config-{depot_name}-depot.yaml")
+        with open(config_path, 'w') as file:
+            file.write(config)
+        logging.info(f"Created depot configuration at {config_path}")
+
 # Setup commands for different environments
-setup_create_command('azure-postgres', 'postgres', 'public', 'azure-postgres.yaml')
-setup_create_command('postgres-icebase', 'icebase', 'default', 'postgres-icebase.yaml')
+setup_create_command('azure-postgres', 'postgres', 'public', 'flare/postgres/azure-postgres.yaml')
+setup_create_command('postgres-icebase', 'icebase', 'default', 'flare/postgres/postgres-icebase.yaml')
+setup_create_command('azure-bigquery', 'bigquery', 'default', 'flare/bigquery/azure-bigquery.yaml')
+setup_create_command('bigquery-icebase', 'bigquery', 'default', 'flare/bigquery/bigquery-icebase.yaml')
+cli.add_command(create_postgres_depot)
 
 if __name__ == "__main__":
     cli()
