@@ -90,19 +90,26 @@ These commands abstract complex CLI commands into simple Make commands that exec
 
 To use CoolMe for custom configurations, run commands in the following format:
 ```bash
-coolme create [Type] [project_name] [ingestion_items...] --type [ingestion_type] --output-catalog [catalog_name] --output-schema [schema_name] --output-tables "[item1=table1,item2=table2,...]"
+coolme create azure-postgres \
+    --project_name jeweler360 \
+    --data-product customer \
+    --entity "product,service,order" \
+    --output-catalog icebase \
+    --output-schema sandbox \
+    --output-tables "product=product_data,service=service_data,order=order_data" \
+    --template-path "/path/to/azure-postgres.yaml"
 ```
 
 #### Examples
 
 - **Multiple Item Configuration**:
   ```bash
-  coolme create postgres-icebase  customer jeweler360 customer product inventory --output-catalog icebase --output-schema sandbox --output-tables "customer=customer_table,product=product_table,inventory=inventory_table"
+  coolme create azure-postgres --project_name jeweler360 --data-product customer 	--entity "product,service,order" 	--output-catalog icebase 	--output-schema sandbox	--output-tables "product=product_data,service=service_data,order=order_data"
   ```
 
 - **Single Item Configuration**:
   ```bash
-  coolme create postgres-icebase  customer jeweler360 customer --type postgres-icebase  --output-schema sandbox --output-tables "customer=customer_table"
+  coolme create postgres-icebase  --project_name jeweler360 --data-product customer  --output-schema sandbox --output-tables "customer=customer_table"
   ```
 ## Contributing
 
