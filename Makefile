@@ -6,21 +6,21 @@ install:
 
 # Run the coolme create command with predefined parameters
 postgres-icebase-all:
-	coolme create postgres-icebase jeweler360 customer customer product inventory order \
+	coolme create-postgres-icebase jeweler360 customer customer product inventory order \
 	--output-catalog icebase \
 	--output-schema sandbox \
 	--output-tables "customer=customer_table,product=product_table,inventory=inventory_table,order=order_table"
 
 
 postgres-icebase:
-	coolme create postgres-icebase jeweler360 customer  customer \
+	coolme create-postgres-icebase jeweler360 customer  customer \
 	--output-catalog icebase \
 	--output-schema sandbox \
 	--output-tables "customer=customer_table"
 
 
 azure-postgres:
-	coolme create azure-postgres jeweler360 customer product \
+	coolme create-azure-postgres jeweler360 customer product \
 	--output-catalog icebase \
 	--output-schema sandbox \
 	--output-tables "product=product_data"
@@ -34,7 +34,7 @@ azure-postgres-all:
 
 
 test:
-	coolme create azure-postgres --project_name jeweler360 --data-product customer \
+	coolme create-postgres-icebase --project_name jeweler360 --data-product customer \
 		--entity "product,service,order" \
 		--output-catalog icebase \
 		--output-schema sandbox \
@@ -42,7 +42,9 @@ test:
 
 
 test-dev:
-	coolme create postgres-icebase --project_name jeweler360 --data-product customer \
+	coolme create-azure-postgres \
+		--project_name jeweler360 \
+		--data-product customer \
 		--entity "product,service,order" \
 		--output-catalog icebase \
 		--output-schema sandbox \
