@@ -1,0 +1,53 @@
+---
+name: {depot_name}-r
+version: v1
+type: instance-secret
+description: "The purpose of secret to mount the snowflake"
+layer: user
+instance-secret:
+  type: key-value-properties
+  acl: r
+  data:
+    username: {username}
+    password: {password}
+---
+name: {depot_name}-rw
+version: v1
+type: instance-secret
+description: "The purpose of secret to mount the snowflake"
+layer: user
+instance-secret:
+  type: key-value-properties
+  acl: r
+  data:
+    username: {username}
+    password: {password}
+
+---
+version: v1
+name: {depot_name}
+type: depot
+tags:
+  - Tier.Gold
+layer: user
+description: "The purpose of snowflake depot test the poc for future poc"
+depot:
+  type: snowflake
+  description: "The purpose of snowflake depot test the poc for future poc"
+  spec:
+    warehouse: {warehouse}
+    url: {url}
+    database: {database}
+  external: true
+  secrets:
+    - name: {depot_name}-r
+      keys:
+        - {depot_name}-r
+      allKeys: true
+    - name: {depot_name}-r
+      keys:
+        - {depot_name}-rw
+      allKeys: true
+
+
+      # Dataos-ctl apply -f # Path of yaml file

@@ -1,7 +1,8 @@
 repos:
   - repo: https://github.com/Yelp/detect-secrets
-    rev: 'v1.5.0'  # Correctly formatted tag with 'v' prefix
+    rev: 'v1.5.0'  # Ensure this tag exists and is up to date
     hooks:
       - id: detect-secrets
-        args: ['--no-verify']
+        args: ['--baseline', '.secrets.baseline']
         exclude: '^.secrets.baseline$'
+        files: '\.(yaml|yml|py)$'  # Target Python and YAML files
