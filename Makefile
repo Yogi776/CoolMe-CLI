@@ -34,7 +34,7 @@ azure-postgres-all:
 
 
 test:
-	coolme create azure-postgres --project_name jeweler360 --data-product customer \
+	coolme create-postgres-icebase --project_name jeweler360 --data-product customer \
 		--entity "product,service,order" \
 		--output-catalog icebase \
 		--output-schema sandbox \
