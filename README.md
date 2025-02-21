@@ -210,6 +210,39 @@ This command will create a new Snowflake depot named `snowflake` with the specif
 
 ---
 
+It looks like there's a mix-up in your documentation template between the `create-lens` command and `create-snowflake-depot` details. Additionally, the example command syntax contains a typo in the tool name ("oolme" should be "coolme") and mismatched parameters and command description. Let's correct these issues and refine the README content:
+
+---
+
+## Command: `create-lens`
+```bash
+make create-lens
+```
+
+Alternatively, execute the command directly (assuming `coolme` is set up correctly):
+
+```bash
+coolme create-lens -n lens_name -e "entity1,entity2,entity3"
+```
+
+### Parameters
+
+The table below lists and describes each parameter used with the `create-lens` command:
+
+| Parameter | Flag | Description                                                | Required |
+|-----------|------|------------------------------------------------------------|:--------:|
+| Name      | `-n` | The name of the lens to be created.                        | Yes      |
+| Entities  | `-e` | A comma-separated list of entities to include in the lens. | Yes      |
+
+### Example
+
+Here is an example command that illustrates how to use `create-lens` with all parameters filled in:
+
+```bash
+coolme create-lens -n customer-360 -e "customer,product,order,transaction,city,order-data"
+```
+
+---
 ## Contributing
 
 Contributions to CoolMe are welcome! Please ensure you follow the contributing guidelines in the CONTRIBUTING.md file.
