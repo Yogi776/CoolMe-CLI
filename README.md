@@ -171,11 +171,72 @@ Here is an example command that illustrates how to use `create-postgres-depot` w
 coolme create-postgres-depot -n postgres -u postgres -p 12345 -h sandbox.postgres.database.azure.com -d postgres
 
 ```
+---
 
-This command will create a new PostgreSQL depot named `postgres` with the specified access credentials and database details.
+## Command: `create-snowflake-depot`
+```bash
+make create-snowflake-depot
+```
 
+Alternatively, execute the command directly (assuming `coolme` is set up correctly):
 
+```bash
+coolme create-snowflake-depot -n depot_name -u username -p password -h hostname -d databasename -w warehouse
+```
 
+### Parameters
+
+The table below lists and describes each parameter used with the `create-snowflake-depot` command:
+
+| Parameter | Flag | Description                                           | Required |
+|-----------|------|-------------------------------------------------------|:--------:|
+| Name      | `-n` | The name of the depot to be created.                  | Yes      |
+| Username  | `-u` | The username required for database access.            | Yes      |
+| Password  | `-p` | The password for database access.                     | Yes      |
+| Hostname  | `-h` | The hostname of the Snowflake server.                 | Yes      |
+| Database  | `-d` | The name of the database to connect to.               | Yes      |
+| Warehouse | `-w` | The name of the Snowflake warehouse to be used.       | Yes      |
+
+### Example
+
+Here is an example command that illustrates how to use `create-snowflake-depot` with all parameters filled in:
+
+```bash
+coolme create-snowflake-depot -n snowflake -u yash -p Pk.99@1234 -h WIIHBDA-PF56723.snowflakecomputing.com -d SNOWFLAKE_SAMPLE_DATA -w COMPUTE_WH
+```
+This command will create a new Snowflake depot named `snowflake` with the specified access credentials and database details.
+
+---
+
+## Command: `create-lens`
+```bash
+make create-lens
+```
+
+Alternatively, execute the command directly (assuming `coolme` is set up correctly):
+
+```bash
+coolme create-lens -n lens_name -e "entity1,entity2,entity3"
+```
+
+### Parameters
+
+The table below lists and describes each parameter used with the `create-lens` command:
+
+| Parameter | Flag | Description                                                | Required |
+|-----------|------|------------------------------------------------------------|:--------:|
+| Name      | `-n` | The name of the lens to be created.                        | Yes      |
+| Entities  | `-e` | A comma-separated list of entities to include in the lens. | Yes      |
+
+### Example
+
+Here is an example command that illustrates how to use `create-lens` with all parameters filled in:
+
+```bash
+coolme create-lens -n customer-360 -e "customer,product,order,transaction,city,order-data"
+```
+
+---
 ## Contributing
 
 Contributions to CoolMe are welcome! Please ensure you follow the contributing guidelines in the CONTRIBUTING.md file.

@@ -68,4 +68,11 @@ create-s3-depot:
 	@coolme create-s3-depot -depot_name poss3 -bucket_name tmdcsftptest -relative_path "/customer" -access_key_id <access_key_id> -access_secret_key_id <access_secret_key_id>
 
 create-lens:
-	@coolme create-lens -n customer-360 -e "customer,product,order,transaction"
+	@coolme create-lens -n customer-360 -e "customer,product,order,transaction,city,order-data"
+
+azure-icebase:
+	coolme create-azure-icebase --project_name jeweler360 --data-product customer \
+	--entity "product" \
+	--output-catalog icebase \
+	--output-schema sandbox \
+	--output-tables "product=product_data"
