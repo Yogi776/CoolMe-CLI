@@ -1,6 +1,7 @@
 import click
 import os
 import logging
+import  re
 
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s: ')
@@ -249,11 +250,14 @@ class FileOps:
             print(f"Failed to create file {path}: {str(e)}")
             return False
 
+
 def generate_yaml_content(entity):
     """Generate YAML content based on a template and the specified entity."""
+    sanitized_entity = re.sub(r'\W+', '_', entity)  # Replace non-alphanumeric characters with '_'
+
     return (
         f"tables:\n"
-        f"  - name: {entity}\n"
+        f"  - name: {sanitized_entity}\n"  # Use sanitized_entity here
         f"    sql:  {{{{ load_sql('{entity}') }}}}\n"
         f"    description: \"This table captures detailed data about {entity}.\"\n"
         f"    data_source: icebase\n"
@@ -261,7 +265,7 @@ def generate_yaml_content(entity):
         f"    joins:\n"
         f"      - name: tables\n"
         f"        relationship: one_to_one\n"
-        f"        sql: \"{{ TABLE.key }}= {{ tables.key }}\" \n"
+        f"        sql: \"{{{{ TABLE.key }}}}= {{{{ tables.key }}}}\" \n"
         f"    dimensions:\n"
         f"      - name: id\n"
         f"        description: \"Unique identifier for each {entity}, linking it to related activities.\"\n"
@@ -299,7 +303,7 @@ def create_lens(name, entities):
             FileOps.create_file(yaml_file_path, yaml_content)
 
         # Create files that do not depend on entities
-        user_group_file_path = os.path.join(model_dir, "user_group.yml")
+        user_group_file_path = os.path.join(model_dir, "user_groups.yml")
         deployment_file_path = os.path.join(base_dir, "deployment.yaml")
         FileOps.create_file(user_group_file_path)  # Create once, not per entity
         FileOps.create_file(deployment_file_path)  # Create once, not per entity
