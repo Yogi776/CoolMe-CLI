@@ -171,8 +171,6 @@ Here is an example command that illustrates how to use `create-postgres-depot` w
 coolme create-postgres-depot -n postgres -u postgres -p 12345 -h sandbox.postgres.database.azure.com -d postgres
 
 ```
-It looks like there's a mismatch in the example command and the parameters described in the table for the `create-snowflake-depot` command. The table refers to `create-postgres-depot`, which seems incorrect based on the context of the example provided for creating a Snowflake depot. Let me correct the table to match the Snowflake context and provide a cohesive README snippet:
-
 ---
 
 ## Command: `create-snowflake-depot`
@@ -207,10 +205,6 @@ Here is an example command that illustrates how to use `create-snowflake-depot` 
 coolme create-snowflake-depot -n snowflake -u yash -p Pk.99@1234 -h WIIHBDA-PF56723.snowflakecomputing.com -d SNOWFLAKE_SAMPLE_DATA -w COMPUTE_WH
 ```
 This command will create a new Snowflake depot named `snowflake` with the specified access credentials and database details.
-
----
-
-It looks like there's a mix-up in your documentation template between the `create-lens` command and `create-snowflake-depot` details. Additionally, the example command syntax contains a typo in the tool name ("oolme" should be "coolme") and mismatched parameters and command description. Let's correct these issues and refine the README content:
 
 ---
 
