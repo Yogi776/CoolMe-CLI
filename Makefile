@@ -66,3 +66,6 @@ create-snowflake-depot:
 
 create-s3-depot:
 	@coolme create-s3-depot -depot_name poss3 -bucket_name tmdcsftptest -relative_path "/customer" -access_key_id <access_key_id> -access_secret_key_id <access_secret_key_id>
+
+create-lens:
+	@coolme create-lens -n customer-360 -e "customer,product,order,transaction"
