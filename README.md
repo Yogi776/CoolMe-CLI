@@ -76,13 +76,19 @@ For ease of use and to streamline workflow execution, the following Make command
   
 Here are the available Makefile commands for setting up different environments:
 
-| Command           | Description                              | Usage Example                                               |
-|-------------------|------------------------------------------|-------------------------------------------------------------|
-| `azure-postgres`  | Configures items for Azure PostgreSQL.   | `make azure-postgres`                                       |
-| `postgres-icebase`| Configures items for Postgres-Icebase.   | `make postgres-icebase`                                     |
-| `azure-bigquery`  | Configures items for Azure BigQuery.     | `make azure-bigquery`                                       |
-| `bigquery-icebase`| Configures items for BigQuery-Icebase.   | `make bigquery-icebase`                                     |
+---
 
+| Command             | Description                                    | Usage Example             |
+|---------------------|------------------------------------------------|---------------------------|
+| `azure-postgres`    | Configures items for Azure PostgreSQL.         | `make azure-postgres`     |
+| `postgres-icebase`  | Configures items for Postgres-Icebase.         | `make postgres-icebase`   |
+| `azure-bigquery`    | Configures items for Azure BigQuery.           | `make azure-bigquery`     |
+| `bigquery-icebase`  | Configures items for BigQuery-Icebase.         | `make bigquery-icebase`   |
+| `azure-icebase`     | Configures items for Azure-Icebase integration.| `make azure-icebase`      |
+
+---
+
+This addition places the `azure-icebase` command into the same format, aligning it neatly with the existing documentation layout. If you need further details or a description for `azure-icebase`, feel free to share, and I can help refine it further!
 ### Detailed Command Usage
 
 Commands for custom configurations can be run with detailed parameters:
