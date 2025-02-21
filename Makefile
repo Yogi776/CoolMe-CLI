@@ -69,3 +69,10 @@ create-s3-depot:
 
 create-lens:
 	@coolme create-lens -n customer-360 -e "customer,product,order,transaction,city,order-data"
+
+azure-icebase:
+	coolme create-azure-icebase --project_name jeweler360 --data-product customer \
+	--entity "product" \
+	--output-catalog icebase \
+	--output-schema sandbox \
+	--output-tables "product=product_data"

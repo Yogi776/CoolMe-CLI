@@ -314,6 +314,7 @@ setup_create_command('azure-postgres', 'postgres', 'public', 'flare/postgres/azu
 setup_create_command('postgres-icebase', 'icebase', 'default', 'flare/postgres/postgres-icebase.yaml')
 setup_create_command('azure-bigquery', 'bigquery', 'default', 'flare/bigquery/azure-bigquery.yaml')
 setup_create_command('bigquery-icebase', 'bigquery', 'default', 'flare/bigquery/bigquery-icebase.yaml')
+setup_create_command('azure-icebase', 'icebase', 'default', 'flare/azure/azure-icebase.yaml')
 
 cli.add_command(create_postgres_depot)
 cli.add_command(create_snowflake_depot)
