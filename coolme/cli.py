@@ -251,6 +251,7 @@ class FileOps:
             return False
 
 
+
 def generate_yaml_content(entity):
     """Generate YAML content based on a template and the specified entity."""
     sanitized_entity = re.sub(r'\W+', '_', entity)  # Replace non-alphanumeric characters with '_'
@@ -276,6 +277,82 @@ def generate_yaml_content(entity):
     )
 
 
+user_group_content = """
+user_groups:
+  - name: default
+    api_scopes:
+      - meta
+      - data
+      - graphql
+      - jobs
+      - source
+    includes: "*"
+"""
+
+# Create the user_group.yml file in the model directory with predefined content
+def generate_deployment_content(entity):
+    """Generate deployment content dynamically based on the entity name."""
+    return f"""
+name: {entity}
+version: v1alpha
+type: lens
+tags:
+  - Tier.Gold
+  - Domain.Insurance
+  - dataos:type:resource
+  - dataos:resource:lens
+description: Deployment of {entity}  Lens2 for advanced monitoring and optimized Loss Prevention.
+workspace: public
+lens:
+  compute: runnable-default
+  secrets:
+    - name: gitsecret
+      allKeys: true
+  source:
+    type: minerva
+    name: minervac
+    catalog: icebase
+  repo:
+    url: https://bitbucket.org/rubik_/solutions
+    lensBaseDir: solutions/{entity.lower()}-360/model
+    syncFlags:
+      - --ref=training-development
+  api:   
+    replicas: 1 
+    logLevel: info  
+    envs:
+      LENS2_SCHEDULED_REFRESH_TIMEZONES: "UTC,America/Vancouver,America/Toronto"
+    resources: 
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 1000m
+        memory: 1048Mi
+  worker: 
+    replicas: 1 
+    logLevel: info  
+    envs:
+      LENS2_SCHEDULED_REFRESH_TIMEZONES: "UTC,America/Vancouver,America/Toronto"
+    resources: 
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 1000m
+        memory: 1048Mi
+  router: 
+    logLevel: info  
+    envs:
+      LENS2_SCHEDULED_REFRESH_TIMEZONES: "UTC,America/Vancouver,America/Toronto"
+    resources: 
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: 1000m
+        memory: 1048Mi
+"""
 
 @click.command(name="create-lens")
 @click.option('-n', '--name', prompt="Enter the base directory name", help="Name of the base directory")
@@ -303,10 +380,14 @@ def create_lens(name, entities):
             FileOps.create_file(yaml_file_path, yaml_content)
 
         # Create files that do not depend on entities
+        # Create files that do not depend on entities
         user_group_file_path = os.path.join(model_dir, "user_groups.yml")
+        FileOps.create_file(user_group_file_path, user_group_content)  # Create once, not per entity
+
+        # Dynamic deployment file for each entity
+        deployment_content = generate_deployment_content(name)
         deployment_file_path = os.path.join(base_dir, "deployment.yaml")
-        FileOps.create_file(user_group_file_path)  # Create once, not per entity
-        FileOps.create_file(deployment_file_path)  # Create once, not per entity
+        FileOps.create_file(deployment_file_path, deployment_content)
 
 
 # Setup commands for different environments
